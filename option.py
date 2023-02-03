@@ -50,7 +50,7 @@ parser.add_argument('--chop', action='store_true',
 # Training specifications
 parser.add_argument('--reset', action='store_true',
                     help='reset the training')
-parser.add_argument('--epochs', type=int, default=200,
+parser.add_argument('--epochs', type=int, default=3,
                     help='number of epochs to train')
 parser.add_argument('--batch_size', type=int, default=8,
                     help='input batch size for training')

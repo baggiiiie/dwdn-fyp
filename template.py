@@ -12,7 +12,7 @@ def set_train_template(args):
             args.data_train = 'BLUR_IMAGE'
             args.dir_data = './TrainingData'
             args.data_test = 'BLUR_IMAGE'
-            args.dir_data_test = './TestData'
+            args.dir_data_test = './ValData'
             args.reset = False
             args.model = "deblur"
             # args.test_only = True
@@ -33,7 +33,7 @@ def set_train_template(args):
 
             args.loss = "1*L1"
             args.patch_size = 256
-            args.batch_size = 8
+            # args.batch_size = 1
             args.grad_clip = 0.5
             if args.test_only:
                 args.save = "deblur_test"
@@ -56,13 +56,12 @@ def set_test_template(args):
             args.reset = False
             args.model = "deblur"
             args.test_only = True
-            args.pre_train = "./experiment/20230119_2004/model/model_latest.pt"
+            args.pre_train = "./experiment/model_600um_300ep_bs16/model/model_latest.pt"
             # args.pre_train = "./model/model_DWDN.pt"
             args.resume = True
             args.save = "deblur"
             args.loss = "1*L1"
             args.patch_size = 256
-            args.batch_size = 8
             args.grad_clip = 0.5
             if args.test_only:
                 args.save = "deblur_test"

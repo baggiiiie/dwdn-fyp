@@ -98,10 +98,10 @@ class Trainer_VD:
             self.clip_gradient(self.optimizer, self.args.grad_clip)
             self.optimizer.step()
 
-            if (batch + 1) % self.args.print_every == 0:
-                self.ckp.write_log('[{}/{}]\tLoss : {}'.format(
-                    (batch + 1) * self.args.batch_size, len(self.loader_train.dataset),
-                    self.loss.display_loss(batch)))
+            # if (batch + 1) % self.args.print_every == 0:
+            #     self.ckp.write_log('[{}/{}]\tLoss : {}'.format(
+            #         (batch + 1) * self.args.batch_size, len(self.loader_train.dataset),
+            #         self.loss.display_loss(batch)))
 
         print("Training loss: %.4f" % (float(loss.item())))
         self.scheduler.step()
