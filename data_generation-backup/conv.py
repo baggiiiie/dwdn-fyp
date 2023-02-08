@@ -26,31 +26,6 @@ for i, out_dir1 in enumerate(out1_dirs):
             os.mkdir(dir2)
         out_dirs[i][j] = dir2
 
-# train_dir = ker_out_dir + 'TrainingData\\'
-# train_blurred = train_dir + 'blurred_img\\'
-# train_ker = train_dir + 'blur_kernel\\'
-# train_clear = train_dir + 'clear_img\\'
-# if not os.path.exists(train_dir):
-#     os.mkdir(train_dir)
-# if not os.path.exists(train_blurred):
-#     os.mkdir(train_blurred)
-# if not os.path.exists(train_ker):
-#     os.mkdir(train_ker)
-# if not os.path.exists(train_clear):
-#     os.mkdir(train_clear)
-# test_dir = ker_out_dir + 'TestData\\'
-# test_blurred = test_dir + 'blurred_img\\'
-# test_ker = test_dir + 'blur_kernel\\'
-# test_clear = test_dir + 'clear_img\\'
-# if not os.path.exists(test_dir):
-#     os.mkdir(test_dir)
-# if not os.path.exists(test_blurred):
-#     os.mkdir(test_blurred)
-# if not os.path.exists(test_ker):
-#     os.mkdir(test_ker)
-# if not os.path.exists(test_clear):
-#     os.mkdir(test_clear)
-#
 im_idx = 0
 for file in files:
     for i in range(0, 1):
@@ -79,7 +54,6 @@ for file in files:
                 out1 = out_dirs[0][0]
                 out2 = out_dirs[0][1]
                 out3 = out_dirs[0][2]
-            print(out1, out2, out3)
             cv2.imwrite(os.path.join(out1, f'img_{im_idx}.png'), result)
             cv2.imwrite(os.path.join(out2, f'img_{im_idx}.png'), kernel_type)
             cv2.imwrite(os.path.join(out3, f'img_{im_idx}.png'), img)
