@@ -1,5 +1,4 @@
 import os
-import decimal
 import torch
 import torch.optim as optim
 import torch.optim.lr_scheduler as lrs
@@ -24,7 +23,8 @@ class Trainer_VD:
         self.optimizer = self.make_optimizer()
         self.scheduler = self.make_scheduler()
         self.ckp = ckp
-
+        self.best_val_loss = 0
+        self.best_ep = 0
         self.error_last = 1e8
 
         if args.load != '.':
@@ -177,7 +177,12 @@ class Trainer_VD:
             self.ckp.save(self, epoch, False)
         self.ckp.end_log(len(self.loader_test), train=True, val=True)
         self.ckp.plot_loss_log(epoch)
-        print("Validation loss: %.4f" % (float(loss.item())))
+
+        if self.best_val_loss == 0 or self.best_val_loss > avg_vloss.item():
+            self.best_val_loss = avg_vloss.item()
+            self.best_ep = epoch
+
+        print("Validation loss: %.4f" % (float(avg_vloss.item())))
         print("Time taken: %.2fs" % (time.time() - self.start_time))
 
     def terminate(self):
@@ -186,4 +191,6 @@ class Trainer_VD:
             return True
         else:
             epoch = self.scheduler.last_epoch + 1
+            print(f'lowest val loss at epoch {self.best_ep}: {self.best_val_loss}')
             return epoch >= self.args.epochs
+

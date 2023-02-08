@@ -10,14 +10,11 @@ def set_train_template(args):
 
         if args.task == "Deblurring":
             args.data_train = 'BLUR_IMAGE'
-            args.dir_data = './TrainingData'
+            args.dir_data = '../train-val-test-data/600u_9ker_0reuses/TrainingData'
             args.data_test = 'BLUR_IMAGE'
-            args.dir_data_test = './ValData'
+            args.dir_data_test = '../train-val-test-data/600u_9ker_0reuses/ValData'
             args.reset = False
             args.model = "deblur"
-            # args.test_only = True
-            # args.pre_train = "./model/model_DWDN.pt"
-
             args.pre_train = '.'
             args.load = '.'
             args.resume = False
@@ -26,20 +23,15 @@ def set_train_template(args):
             # args.pre_train = "./experiment/20230119_2303/model/model_latest.pt"
             # args.resume = True
             # args.load = '20230119_2303'
-
-
-            # args.save = "deblur"
             args.save = '.'
 
             args.loss = "1*L1"
-            args.patch_size = 256
-            # args.batch_size = 1
             args.grad_clip = 0.5
             if args.test_only:
                 args.save = "deblur_test"
             args.save_results = True
             args.save_models = True
-            args.no_augment = True
+            args.no_augment = False
 
 # below is the code for testing
 def set_test_template(args):
@@ -50,13 +42,13 @@ def set_test_template(args):
 
         if args.task == "Deblurring":
             args.data_train = 'BLUR_IMAGE'
-            args.dir_data = './TrainingData'
+            # args.dir_data = '../train-val-test-data/001deg/TrainingData'
             args.data_test = 'BLUR_IMAGE'
-            args.dir_data_test = './TestData'
+            args.dir_data_test = '../train-val-test-data/600u2/TestData'
             args.reset = False
             args.model = "deblur"
             args.test_only = True
-            args.pre_train = "./experiment/model_600um_300ep_bs16/model/model_latest.pt"
+            args.pre_train = "./experiment/model_600um_9ker_bs8/model/model_200.pt"
             # args.pre_train = "./model/model_DWDN.pt"
             args.resume = True
             args.save = "deblur"
