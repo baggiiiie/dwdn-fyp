@@ -3,7 +3,7 @@ import os
 import random
 import numpy as np
 kernel_type = '600u\\'
-root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata2\\'
+root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
 input_dir = root_dir + 'rescaled_img\\'
 # get all files in the directory
 files = os.listdir(input_dir)
@@ -28,10 +28,14 @@ for i, out_dir1 in enumerate(out1_dirs):
 
 im_idx = 0
 for file in files:
-    for i in range(0, 1):
+    for i in range(0, 3):
         kernel_type = random.choice(os.listdir(kernel_dir))
         if kernel_type.endswith(".png") and file.endswith(".png"):
             img = cv2.imread(os.path.join(input_dir, file))
+            if i == 1:
+                img = cv2.flip(img, 0)
+            elif i == 2:
+                img = cv2.flip(img, 1)
             kernel_type = cv2.imread(os.path.join(kernel_dir, kernel_type), 0)
             print(im_idx, img.shape, kernel_type.shape)
             # Normalize the kernel

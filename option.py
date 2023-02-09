@@ -50,13 +50,13 @@ parser.add_argument('--chop', action='store_true',
 # Training specifications
 parser.add_argument('--reset', action='store_true',
                     help='reset the training')
-parser.add_argument('--epochs', type=int, default=5,
+parser.add_argument('--epochs', type=int, default=250,
                     help='number of epochs to train')
 parser.add_argument('--batch_size', type=int, default=8,
                     help='input batch size for training')
 parser.add_argument('--test_only', action='store_true',
                     help='set this option to test the model')
-parser.add_argument('--train_with_val', action='store_true', default=True,
+parser.add_argument('--train_with_val', action='store_true', default=False,
                     help='set this option to train the model with validation set')
 
 # Optimization specifications

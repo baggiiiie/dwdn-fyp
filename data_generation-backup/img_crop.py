@@ -2,7 +2,7 @@ from PIL import Image
 import random
 import os
 
-folder_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata2\\'
+folder_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
 img_dir = 'green_image\\'
 # specify the directory path
 directory = folder_dir + img_dir
