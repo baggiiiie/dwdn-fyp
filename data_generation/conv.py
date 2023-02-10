@@ -2,13 +2,13 @@ import cv2
 import os
 import random
 import numpy as np
-kernel_type = '600u\\'
+kernel_type = '003deg\\'
 root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
-input_dir = root_dir + 'rescaled_img\\'
+input_dir = root_dir + 'GT_img\\'
 # get all files in the directory
 files = os.listdir(input_dir)
 
-kernel_dir = root_dir + 'all_kernel\\' + kernel_type
+kernel_dir = root_dir + '9_kernel\\' + kernel_type
 ker_out_dir = root_dir + kernel_type
 
 if not os.path.exists(ker_out_dir):
@@ -28,7 +28,7 @@ for i, out_dir1 in enumerate(out1_dirs):
 
 im_idx = 0
 for file in files:
-    for i in range(0, 3):
+    for i in range(0, 2):
         kernel_type = random.choice(os.listdir(kernel_dir))
         if kernel_type.endswith(".png") and file.endswith(".png"):
             img = cv2.imread(os.path.join(input_dir, file))

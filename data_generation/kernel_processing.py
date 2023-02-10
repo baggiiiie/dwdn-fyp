@@ -28,7 +28,7 @@ for file in files:
 
     # Get the width and height of the image
     width, height = im.size
-    size = 105
+    size = 115
     stride = width // 3
 
     ker_num = 1
