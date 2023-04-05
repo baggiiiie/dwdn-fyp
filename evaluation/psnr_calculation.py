@@ -19,19 +19,17 @@ def get_psnr(gt_dir, deblur_dir):
     return psnr
 
 
-gt = '003deg_with_gaussian\\'
-deblurred = 'results_003deg_with_gaussian\\'
-
-gt_dir = 'C:\\Users\\daiy0012\\Downloads\\dwdn-data\\datasets\\'
-gt_dir = gt_dir + gt + 'TestData\\clear_img\\'
-deblur_dir = 'C:\\Users\\daiy0012\\Downloads\\dwdn-data\\results\\'
-deblur_dir = deblur_dir + deblurred
+dataset = '003deg_with_gaussian\\'
+root_dir = 'C:\\Users\\daiy0012\\Downloads\\dwdn-data\\datasets\\'
+dataset_dir = root_dir + dataset
+gt_dir = dataset_dir + 'TestData\\clear_img\\'
+result_dir = dataset_dir + 'results\\'
 
 avg_psnr = 0
 for img in os.listdir(gt_dir):
     img_name = img.strip('.png')
     gt_img_dir = gt_dir + img
-    deblur_img_dir = deblur_dir + img_name + 'DEBLUR.png'
+    deblur_img_dir = result_dir + img_name + 'DEBLUR.png'
     psnr = get_psnr(gt_img_dir, deblur_img_dir)
     avg_psnr = avg_psnr + psnr
     # Print the PSNR value
