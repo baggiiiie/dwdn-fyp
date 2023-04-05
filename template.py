@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 # below is the code for training
-data_dir = '../train-val-test-data/003deg_hor_flip/'
+data_dir = '../train-val-test-data/003deg_with_Gaussian/'
+
 
 def set_train_template(args):
-
     if args.template == 'DWDN':
 
         args.task = 'Deblurring'
@@ -35,9 +35,9 @@ def set_train_template(args):
             args.save_models = True
             args.no_augment = False
 
+
 # below is the code for testing
 def set_test_template(args):
-
     if args.template == 'DWDN':
 
         args.task = 'Deblurring'
@@ -50,7 +50,7 @@ def set_test_template(args):
             args.reset = False
             args.model = "deblur"
             args.test_only = True
-            args.pre_train = "./experiment/model_003deg_9ker_horflip/model/model_latest.pt"
+            args.pre_train = "./experiment/model_003deg_with_Gaussian/model/model_latest.pt"
             # args.pre_train = "./model/model_DWDN.pt"
             args.resume = True
             args.save = "deblur"

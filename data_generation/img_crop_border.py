@@ -3,7 +3,7 @@ import random
 import os
 
 folder_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
-img_dir = 'GoogleEarthImage\\GoogleEarthImage3\\'
+img_dir = 'GoogleEarthImage\\GoogleEarthImage5\\'
 # specify the directory path
 directory = folder_dir + img_dir
 
