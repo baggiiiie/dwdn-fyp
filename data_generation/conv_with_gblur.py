@@ -4,10 +4,10 @@ import numpy as np
 
 kernel_type = '003deg_9ker'
 center_kernel = '003deg_5.png'
-root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
-gtImg_dir = root_dir + 'GT_img\\'
+data_root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
+gtImg_dir = data_root_dir + 'GT_img\\'
 output_folder = '003deg_with_Gaussian\\'
-kernel_dir = os.path.join(root_dir + 'kernels\\', kernel_type)
+kernel_dir = os.path.join(data_root_dir + 'kernels\\', kernel_type)
 num_augment = 2
 gblur_kernel = 5
 
@@ -19,7 +19,7 @@ cols = [0, 107, 213, 320]
 gt_imgs = os.listdir(gtImg_dir)
 kernels = os.listdir(kernel_dir)
 
-output_dir = root_dir + output_folder
+output_dir = data_root_dir + output_folder
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
