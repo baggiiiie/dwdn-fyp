@@ -6,9 +6,9 @@ kernel_type = '003deg_9ker'
 center_kernel = '003deg_5.png'
 data_root_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
 gtImg_dir = data_root_dir + 'GT_img\\'
-output_folder = '003deg_with_Gaussian\\'
+output_folder = '003deg_with_gaussian\\'
 kernel_dir = os.path.join(data_root_dir + 'kernels\\', kernel_type)
-num_augment = 2
+num_augment = 1
 gblur_kernel = 5
 
 # overlapping boundaries
