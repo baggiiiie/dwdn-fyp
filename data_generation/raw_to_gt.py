@@ -1,16 +1,31 @@
 import os
 from PIL import Image
+import argparse
 
-folder_dir = 'C:\\Users\\daiy0012\\Downloads\\mydata\\'
-raw_img_dir = folder_dir + 'raw_img\\'
-SIZE = 320
+# Create an ArgumentParser object
+parser = argparse.ArgumentParser()
+
+# Add long options
+parser.add_argument('--working_dir', help='The working directory',
+                    default='C:\\Users\\daiy0012\\Downloads\\mydata\\')
+parser.add_argument('--raw_img_dir', help='The folder in working directory where raw images are located',
+                    default='raw_img\\')
+parser.add_argument('--gt_size', help='The size of final gt images',
+                    default=320)
+
+# Parse the command line arguments
+args = parser.parse_args()
+
+working_dir = args.working_dir
+raw_img_dir = working_dir + args.raw_img_dir
+gt_size = args.gt_size
+cropped_size = 1250
 
 
 def crop_rescale(file, filename, dir):
     output_dir = dir + 'GT_img\\'
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    size = 1250
 
     filename = filename.strip('.png')
 
@@ -19,37 +34,13 @@ def crop_rescale(file, filename, dir):
     # print(width, height)
     # Crop the image
     print(f'cropping {filename}')
-    cropped1 = im.crop((0, 0, size, size)).resize((320, 320))
+    cropped1 = im.crop((0, 0, cropped_size, cropped_size)).resize((gt_size, gt_size))
     cropped1.save(os.path.join(output_dir, f'{filename}_{1}.png'))
-    cropped2 = im.crop((width - size, height - size, width, height)).resize((320, 320))
+    cropped2 = im.crop((width - cropped_size, height - cropped_size, width, height)).resize((gt_size, gt_size))
     cropped2.save(os.path.join(output_dir, f'{filename}_{2}.png'))
-    cropped3 = im.crop((600, height - size, 600 + size, height)).resize((320, 320))
+    cropped3 = im.crop((600, height - cropped_size, 600 + cropped_size, height)).resize((gt_size, gt_size))
     flipped = cropped3.transpose(method=Image.FLIP_LEFT_RIGHT)
     flipped.save(os.path.join(output_dir, f'{filename}_{3}.png'))
-
-
-def rescale(folder_dir):
-    img_dir = 'cropped_img\\'
-    directory = folder_dir + img_dir
-    # get all files in the directory
-    files = os.listdir(directory)
-
-    # create a new directory to save the cropped images
-    output_dir = folder_dir + 'rescaled_img\\'
-    if not os.path.exists(output_dir):
-        os.mkdir(output_dir)
-
-    # loop through the files and rescale them
-    for file in files:
-        if file.endswith(".jpg") or file.endswith(".png"):
-            filename = file.strip('.png')
-            # Open the image
-            im = Image.open(os.path.join(directory, file))
-
-            rescaled = im.resize((SIZE, SIZE))
-
-            # save the cropped image to the new directory
-            rescaled.save(os.path.join(output_dir, file))
 
 
 def color_filter(file, dir):
@@ -68,4 +59,4 @@ images = os.listdir(raw_img_dir)
 for img in images:
     if img.endswith(".jpg") or img.endswith(".png"):
         green_img = color_filter(img, raw_img_dir)
-        crop_rescale(green_img, img, folder_dir)
+        crop_rescale(green_img, img, working_dir)
