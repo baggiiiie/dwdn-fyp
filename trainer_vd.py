@@ -29,8 +29,8 @@ class Trainer_VD:
 
         if args.load != '.':
             self.optimizer.load_state_dict(torch.load(os.path.join(ckp.dir, 'optimizer.pt')))
-            for _ in range(len(ckp.psnr_log)):
-                self.scheduler.step()
+            # for _ in range(len(ckp.psnr_log)):
+            #     self.scheduler.step()
 
     def set_loader(self, new_loader):
         self.loader_train = new_loader.loader_train

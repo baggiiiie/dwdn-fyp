@@ -14,7 +14,7 @@ from matplotlib import pyplot as plt
 class Logger:
     def __init__(self, args):
         self.args = args
-        self.psnr_log = torch.Tensor()
+        # self.psnr_log = torch.Tensor()
         self.loss_log = torch.Tensor()
         self.vloss_log = torch.Tensor()
 
@@ -29,8 +29,8 @@ class Logger:
             else:
                 self.loss_log = torch.load(self.dir + '/train_loss_log.pt')
                 self.vloss_log = torch.load(self.dir + '/val_loss_log.pt')
-                self.psnr_log = torch.load(self.dir + '/psnr_log.pt')
-                print('Continue from epoch {}...'.format(len(self.psnr_log)))
+                # self.psnr_log = torch.load(self.dir + '/psnr_log.pt')
+                # print('Continue from epoch {}...'.format(len(self.psnr_log)))
 
         if args.reset:
             os.system('rm -rf {}'.format(self.dir))
@@ -42,7 +42,7 @@ class Logger:
 
     def save(self, trainer, epoch, is_best):
         trainer.model.save(self.dir, epoch, is_best)
-        torch.save(self.psnr_log, os.path.join(self.dir, 'psnr_log.pt'))
+        # torch.save(self.psnr_log, os.path.join(self.dir, 'psnr_log.pt'))
         torch.save(trainer.optimizer.state_dict(), os.path.join(self.dir, 'optimizer.pt'))
         trainer.loss.save(self.dir)
         trainer.loss.plot_loss(self.dir, epoch)
@@ -73,7 +73,6 @@ class Logger:
             self.vloss_log = torch.cat((self.vloss_log, torch.zeros(1)))
         # else:
         #     self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
-
 
     def report_log(self, item, train, val):
         if train:
