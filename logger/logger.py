@@ -3,7 +3,6 @@ import imageio
 import numpy as np
 import os
 import datetime
-import scipy.io as sio
 
 import matplotlib
 
@@ -51,12 +50,13 @@ class Logger:
     def save_images(self, filename, save_list):
 
         if self.args.task == 'Deblurring':
+            dataset_dir = self.args.dataset_dir
             idx = 0
             f = filename[idx][0].split('.')
-            filename = './results/{}'.format(f[0])
+            filename = dataset_dir + '/results/{}'.format(f[0])
             if not os.path.exists(os.path.dirname(filename)):
                 os.makedirs(os.path.dirname(filename))
-                print('Save Path : {}'.format('./results'))
+                print('Save Path : {}'.format(dataset_dir + '/results'))
             if self.args.model == 'deblur':
                 postfix = ['DEBLUR']
 
