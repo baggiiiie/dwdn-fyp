@@ -29,11 +29,11 @@ parser.add_argument('--rgb_range', type=int, default=1,
                     help='maximum value of RGB')
 parser.add_argument('--n_colors', type=int, default=3,
                     help='number of color channels to use')
-parser.add_argument('--no_augment', action='store_true',
+parser.add_argument('--no_augment', action='store_true', default=False,
                     help='do not use data augmentation')
 
 # Model specifications
-parser.add_argument('--model', default='DEBLUR',
+parser.add_argument('--model', default='deblur',
                     help='model name')
 parser.add_argument('--act', type=str, default='relu',
                     help='activation function')
@@ -56,8 +56,11 @@ parser.add_argument('--batch_size', type=int, default=8,
                     help='input batch size for training')
 parser.add_argument('--test_only', action='store_true',
                     help='set this option to test the model')
-parser.add_argument('--train_with_val', action='store_true', default=False,
+parser.add_argument('--train_with_val', action='store_true', default=True,
                     help='set this option to train the model with validation set')
+parser.add_argument('--dataset_dir', default='../dwdn-data/datasets/600um_with_gaussian/',
+                    help='input the directory for dataset')
+
 
 # Optimization specifications
 parser.add_argument('--lr', type=float, default=1e-4,
@@ -106,9 +109,4 @@ for arg in vars(args):
     elif vars(args)[arg] == 'False':
         vars(args)[arg] = False
 
-if args.train_with_val:
-    template.set_train_template(args)
-else:
-    template.set_test_template(args)
-
-
+template.set_train_template(args)
