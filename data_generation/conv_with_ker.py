@@ -28,6 +28,12 @@ parser.add_argument('--num_augment', help='The number of data augmentations appl
 # Parse the command line arguments
 args = parser.parse_args()
 
+for arg in vars(args):
+    if vars(args)[arg] == 'True':
+        vars(args)[arg] = True
+    elif vars(args)[arg] == 'False':
+        vars(args)[arg] = False
+
 data_root_dir = args.working_dir
 gtImg_dir = data_root_dir + args.gt_dir
 kernel_dir = os.path.join(data_root_dir + args.kernel_dir)
