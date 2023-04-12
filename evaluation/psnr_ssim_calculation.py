@@ -2,6 +2,28 @@ import cv2
 import numpy as np
 import os
 from skimage.metrics import structural_similarity as ssim
+import argparse
+# what you need:
+# a working dir
+# a dir for dataset
+# the dataset dir must include test data and deblur results
+
+parser = argparse.ArgumentParser()
+
+# Add long options
+parser.add_argument('--working_dir', help='The working directory',
+                    default='C:\\Users\\daiy0012\\Downloads\\mydata\\')
+parser.add_argument('--dataset', help='The folder in working directory where the dataset is located',
+                    default='600u_center_ker\\')
+
+args = parser.parse_args()
+
+working_dir = args.working_dir
+
+dataset = args.dataset
+dataset_dir = working_dir + dataset
+gt_dir = dataset_dir + 'TestData\\clear_img\\'
+result_dir = dataset_dir + 'results\\'
 
 
 def get_psnr(gt_dir, deblur_dir):
@@ -32,13 +54,8 @@ def get_ssim(gt_dir, deblur_dir):
     return ssim_value
 
 
-dataset = '600u_center_ker\\'
-
-root_dir = 'C:\\Users\\daiy0012\\Downloads\\dwdn-data\\datasets\\'
-dataset_dir = root_dir + dataset
-gt_dir = dataset_dir + 'TestData\\clear_img\\'
-result_dir = dataset_dir + 'results\\'
-
+psnr_file = 'TestPSNR.txt'
+ssim_file = 'TestSSIM.txt'
 avg_ssim = 0
 avg_psnr = 0
 for img in os.listdir(gt_dir):
@@ -52,7 +69,15 @@ for img in os.listdir(gt_dir):
     avg_ssim = avg_ssim + ssim_value
 
     print(f'PSNR: {psnr:.2f} | SSIM: {ssim_value:.3f} | {img}')
-
+    with open(psnr_file, "a+") as file:
+        file.write(f'PSNR:{psnr:.4f}|{img}')
+    with open(ssim_file, "a+") as file:
+        file.write(f'SSIM:{ssim:.4f}|{img}')
 avg_psnr = avg_psnr / len(os.listdir(gt_dir))
 avg_ssim = avg_ssim / len(os.listdir(gt_dir))
 print(f'Average PSNR {avg_psnr:.2f} | Average SSIM {avg_ssim:.3f}.')
+
+with open(psnr_file, "a+") as file:
+    file.write(f'AVG_PSNR:{avg_psnr:.4f}')
+with open(ssim_file, "a+") as file:
+    file.write(f'AVG_SSIM:{avg_ssim:.4f}')
