@@ -46,7 +46,7 @@ class Logger:
         torch.save(trainer.optimizer.state_dict(), os.path.join(self.dir, 'optimizer.pt'))
         trainer.loss.save(self.dir)
         trainer.loss.plot_loss(self.dir, epoch)
-        self.plot_psnr_log(epoch)
+        # self.plot_psnr_log(epoch)
 
     def save_images(self, filename, save_list):
 
@@ -70,25 +70,26 @@ class Logger:
         if train:
             self.loss_log = torch.cat((self.loss_log, torch.zeros(1)))
         elif val:
-            self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
-        else:
             self.vloss_log = torch.cat((self.vloss_log, torch.zeros(1)))
+        # else:
+        #     self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
+
 
     def report_log(self, item, train, val):
         if train:
             self.loss_log[-1] += item
         elif val:
             self.vloss_log[-1] += item
-        else:
-            self.psnr_log[-1] += item
+        # else:
+        #     self.psnr_log[-1] += item
 
     def end_log(self, n_div, train, val):
         if train:
             self.loss_log[-1].div_(n_div)
         elif val:
-            self.psnr_log[-1].div_(n_div)
-        else:
             self.vloss_log[-1].div_(n_div)
+        # else:
+        #     self.psnr_log[-1].div_(n_div)
 
     def plot_loss_log(self, epoch):
         axis = np.linspace(1, epoch, epoch)
@@ -103,17 +104,17 @@ class Logger:
         plt.savefig(os.path.join(self.dir, 'loss.pdf'))
         plt.close(fig)
 
-    def plot_psnr_log(self, epoch):
-        axis = np.linspace(1, epoch, epoch)
-        fig = plt.figure()
-        plt.title('PSNR Graph')
-        plt.plot(axis, self.psnr_log.numpy(), label='PSNR')
-        plt.legend()
-        plt.xlabel('Epochs')
-        plt.ylabel('PSNR')
-        plt.grid(True)
-        plt.savefig(os.path.join(self.dir, 'psnr.pdf'))
-        plt.close(fig)
+    # def plot_psnr_log(self, epoch):
+    #     axis = np.linspace(1, epoch, epoch)
+    #     fig = plt.figure()
+    #     plt.title('PSNR Graph')
+    #     plt.plot(axis, self.psnr_log.numpy(), label='PSNR')
+    #     plt.legend()
+    #     plt.xlabel('Epochs')
+    #     plt.ylabel('PSNR')
+    #     plt.grid(True)
+    #     plt.savefig(os.path.join(self.dir, 'psnr.pdf'))
+    #     plt.close(fig)
 
     def done(self):
         print('')
