@@ -132,8 +132,8 @@ class Trainer_VD:
                     save_list = [deblur[0]]
                     self.ckp.save_images(filename, save_list)
 
-            if self.args.save_models:
-                self.ckp.save(self, epoch, False)
+            # if self.args.save_models:
+            #     self.ckp.save(self, epoch, False)
 
             # self.ckp.report_log(psnr.item(), train=False, val=False)
             self.ckp.end_log(len(self.loader_test), train=False, val=False)

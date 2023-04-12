@@ -14,7 +14,7 @@ from matplotlib import pyplot as plt
 class Logger:
     def __init__(self, args):
         self.args = args
-        # self.psnr_log = torch.Tensor()
+        self.psnr_log = torch.Tensor()
         self.loss_log = torch.Tensor()
         self.vloss_log = torch.Tensor()
 
@@ -42,7 +42,7 @@ class Logger:
 
     def save(self, trainer, epoch, is_best):
         trainer.model.save(self.dir, epoch, is_best)
-        # torch.save(self.psnr_log, os.path.join(self.dir, 'psnr_log.pt'))
+        torch.save(self.psnr_log, os.path.join(self.dir, 'psnr_log.pt'))
         torch.save(trainer.optimizer.state_dict(), os.path.join(self.dir, 'optimizer.pt'))
         trainer.loss.save(self.dir)
         trainer.loss.plot_loss(self.dir, epoch)
