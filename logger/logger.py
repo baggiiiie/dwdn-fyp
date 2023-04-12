@@ -69,25 +69,25 @@ class Logger:
     def start_log(self, train, val):
         if train:
             self.loss_log = torch.cat((self.loss_log, torch.zeros(1)))
-        else:
+        elif val:
             self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
-        if val:
+        else:
             self.vloss_log = torch.cat((self.vloss_log, torch.zeros(1)))
 
     def report_log(self, item, train, val):
         if train:
             self.loss_log[-1] += item
+        elif val:
+            self.vloss_log[-1] += item
         else:
             self.psnr_log[-1] += item
-        if val:
-            self.vloss_log[-1] += item
 
     def end_log(self, n_div, train, val):
         if train:
             self.loss_log[-1].div_(n_div)
-        else:
+        elif val:
             self.psnr_log[-1].div_(n_div)
-        if val:
+        else:
             self.vloss_log[-1].div_(n_div)
 
     def plot_loss_log(self, epoch):

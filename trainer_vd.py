@@ -135,6 +135,7 @@ class Trainer_VD:
             if self.args.save_models:
                 self.ckp.save(self, epoch, False)
 
+            # self.ckp.report_log(psnr.item(), train=False, val=False)
             self.ckp.end_log(len(self.loader_test), train=False, val=False)
 
     def validation(self):
