@@ -29,7 +29,7 @@ parser.add_argument('--rgb_range', type=int, default=1,
                     help='maximum value of RGB')
 parser.add_argument('--n_colors', type=int, default=3,
                     help='number of color channels to use')
-parser.add_argument('--no_augment', action='store_true', default=False,
+parser.add_argument('--no_augment', action='store_true', default=True,
                     help='do not use data augmentation')
 
 # Model specifications
@@ -58,7 +58,7 @@ parser.add_argument('--test_only', action='store_true',
                     help='set this option to test the model')
 parser.add_argument('--train_with_val', action='store_true', default=True,
                     help='set this option to train the model with validation set')
-parser.add_argument('--dataset_dir', default='../dwdn-data/datasets/600um_with_gaussian/',
+parser.add_argument('--dataset_dir', default='../dwdn-data/datasets/600um_9kercombined_no_gblur/',
                     help='input the directory for dataset')
 
 

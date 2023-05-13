@@ -13,17 +13,19 @@ parser = argparse.ArgumentParser()
 
 # Add long options
 parser.add_argument('--working_dir', help='The working directory',
-                    default='C:\\Users\\daiy0012\\Downloads\\mydata\\')
+                    default='C:\\Users\\daiy0012\\Downloads\\collected-data\\')
 parser.add_argument('--gt_dir', help='The folder in working directory where gt images are located',
-                    default='gt_imgs\\')
+                    default='GT_img\\')
 parser.add_argument('--kernel_dir', help='The folder in working directory where kernel images are located',
-                    default='kernels\\')
+                    default='manually_cropped_kernels\\600um_9_kernel_manual')
 parser.add_argument('--add_gblur', help='Whether Gaussian blur is added to the final convoluted images',
-                    default=True)
+                    default=False)
 parser.add_argument('--gblur_kernel', help='The kernel size for Gaussian blur',
                     default=5)
 parser.add_argument('--num_augment', help='The number of data augmentations applied, from 0 to 2',
                     default=1)
+parser.add_argument('--output_dir', help='The folder name for output dataset',
+                    default='C:\\Users\\daiy0012\\Downloads\\dwdn-data\\datasets\\600um_9kercombined_no_gblur')
 
 # Parse the command line arguments
 args = parser.parse_args()
@@ -37,14 +39,15 @@ for arg in vars(args):
 data_root_dir = args.working_dir
 gtImg_dir = data_root_dir + args.gt_dir
 kernel_dir = os.path.join(data_root_dir + args.kernel_dir)
+output_folder = args.output_dir
 
 
-num_augment = args.num_augment
-gblur_kernel = args.gblur_kernel
+num_augment = int(args.num_augment)
+gblur_kernel = int(args.gblur_kernel)
 add_gblur = args.add_gblur
 
-output_folder = 'dataset\\'
-output_dir = data_root_dir + output_folder
+# output_dir = data_root_dir + output_folder
+output_dir = args.output_dir
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -53,7 +56,7 @@ out_dirs1 = ['TrainingData\\', 'ValData\\', 'TestData\\']
 out_dirs2 = ['blurred_img\\', 'blur_kernel\\', 'clear_img\\']
 out_dirs = [[''] * 3 for i in range(3)]
 for i, out_dir1 in enumerate(out_dirs1):
-    dir1 = output_dir + out_dir1
+    dir1 = os.path.join(output_dir, out_dir1)
     if not os.path.exists(dir1):
         os.mkdir(dir1)
     for j, out_dir2 in enumerate(out_dirs2):
@@ -81,7 +84,7 @@ def conv_with_ker(img, kernels):
             for col in range(0, 3):
                 combined_image[rows[row]:rows[row + 1], cols[col]:cols[col + 1]] = result[rows[row]:rows[row + 1],
                                                                                    cols[col]:cols[col + 1]]
-    return combined_image, center_kernel
+    return combined_image, kernel_used
 
 
 gt_imgs = os.listdir(gtImg_dir)
@@ -94,6 +97,7 @@ for ker in files:
         kernels.append(ker)
 num_kernels = len(kernels)
 
+im_idx = 0
 for file in gt_imgs:
     for i in range(0, num_augment + 1):
         if file.endswith(".png"):

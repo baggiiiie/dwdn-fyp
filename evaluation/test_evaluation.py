@@ -12,9 +12,9 @@ parser = argparse.ArgumentParser()
 
 # Add long options
 parser.add_argument('--working_dir', help='The working directory',
-                    default='C:\\Users\\daiy0012\\Downloads\\mydata\\')
+                    default='C:\\Users\\daiy0012\\Downloads\\dwdn-data\\datasets\\')
 parser.add_argument('--dataset', help='The folder in working directory where the dataset is located',
-                    default='600u_center_ker\\')
+                    default='600um_with_gaussian\\')
 
 args = parser.parse_args()
 
@@ -54,14 +54,14 @@ def get_ssim(gt_dir, deblur_dir):
     return ssim_value
 
 
-psnr_file = 'TestPSNR.txt'
-ssim_file = 'TestSSIM.txt'
+psnr_file = os.path.join(dataset_dir, 'TestPSNR.txt')
+ssim_file = os.path.join(dataset_dir, 'TestSSIM.txt')
 avg_ssim = 0
 avg_psnr = 0
 for img in os.listdir(gt_dir):
     img_name = img.split('.')[0]
     gt_img_dir = gt_dir + img
-    deblur_img_dir = result_dir + img_name + 'DEBLUR.png'
+    deblur_img_dir = result_dir + img_name + '_DEBLUR.png'
     # print(gt_img_dir, deblur_img_dir)
     psnr = get_psnr(gt_img_dir, deblur_img_dir)
     avg_psnr = avg_psnr + psnr
@@ -70,9 +70,9 @@ for img in os.listdir(gt_dir):
 
     print(f'PSNR: {psnr:.2f} | SSIM: {ssim_value:.3f} | {img}')
     with open(psnr_file, "a+") as file:
-        file.write(f'PSNR:{psnr:.4f}|{img}')
+        file.write('PSNR:{:.4f}|{}\n'.format(psnr,img))
     with open(ssim_file, "a+") as file:
-        file.write(f'SSIM:{ssim:.4f}|{img}')
+        file.write('SSIM:{:.4f}|{}\n'.format(ssim_value,img))
 avg_psnr = avg_psnr / len(os.listdir(gt_dir))
 avg_ssim = avg_ssim / len(os.listdir(gt_dir))
 print(f'Average PSNR {avg_psnr:.2f} | Average SSIM {avg_ssim:.3f}.')

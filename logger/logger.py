@@ -3,11 +3,10 @@ import imageio
 import numpy as np
 import os
 import datetime
-
 import matplotlib
+from matplotlib import pyplot as plt
 
 matplotlib.use('Agg')
-from matplotlib import pyplot as plt
 
 
 class Logger:
@@ -20,16 +19,16 @@ class Logger:
         if args.load == '.':
             if args.save == '.':
                 args.save = datetime.datetime.now().strftime('%Y%m%d_%H%M')
-            self.dir = 'experiment/' + args.save
+            self.dir = self.args.dataset_dir + 'model/' + args.save
         else:
-            self.dir = 'experiment/' + args.load
+            self.dir = self.args.dataset_dir + 'model/' + args.load
             if not os.path.exists(self.dir):
                 args.load = '.'
             else:
                 self.loss_log = torch.load(self.dir + '/train_loss_log.pt')
                 self.vloss_log = torch.load(self.dir + '/val_loss_log.pt')
-                # self.psnr_log = torch.load(self.dir + '/psnr_log.pt')
-                # print('Continue from epoch {}...'.format(len(self.psnr_log)))
+                self.psnr_log = torch.load(self.dir + '/psnr_log.pt')
+                print('Continue from epoch {}...'.format(len(self.psnr_log)))
 
         if args.reset:
             os.system('rm -rf {}'.format(self.dir))
@@ -58,7 +57,7 @@ class Logger:
                 os.makedirs(os.path.dirname(filename))
                 print('Save Path : {}'.format(dataset_dir + '/results'))
             if self.args.model == 'deblur':
-                postfix = ['DEBLUR']
+                postfix = ['_DEBLUR']
 
         for img, post in zip(save_list, postfix):
             img = img[0].data.mul(255 / self.args.rgb_range)
@@ -71,24 +70,24 @@ class Logger:
             self.loss_log = torch.cat((self.loss_log, torch.zeros(1)))
         elif val:
             self.vloss_log = torch.cat((self.vloss_log, torch.zeros(1)))
-        # else:
-        #     self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
+        else:
+            self.psnr_log = torch.cat((self.psnr_log, torch.zeros(1)))
 
     def report_log(self, item, train, val):
         if train:
             self.loss_log[-1] += item
         elif val:
             self.vloss_log[-1] += item
-        # else:
-        #     self.psnr_log[-1] += item
+        else:
+            self.psnr_log[-1] += item
 
     def end_log(self, n_div, train, val):
         if train:
             self.loss_log[-1].div_(n_div)
         elif val:
             self.vloss_log[-1].div_(n_div)
-        # else:
-        #     self.psnr_log[-1].div_(n_div)
+        else:
+            self.psnr_log[-1].div_(n_div)
 
     def plot_loss_log(self, epoch):
         axis = np.linspace(1, epoch, epoch)

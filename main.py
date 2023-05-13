@@ -21,6 +21,8 @@ while not t.terminate():
     # t.validation()
 
 chkp.done()
+
+# below code is for debugging cuda setup
 # print(torch.cuda.is_available())
 # current = torch.cuda.current_device()
 # print(current)

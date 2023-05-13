@@ -18,7 +18,7 @@ args = parser.parse_args()
 
 working_dir = args.working_dir
 raw_img_dir = working_dir + args.raw_img_dir
-gt_size = args.gt_size
+gt_size = int(args.gt_size)
 cropped_size = 1250
 
 

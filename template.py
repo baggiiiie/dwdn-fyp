@@ -16,7 +16,7 @@ def set_train_template(args):
             args.reset = False
             args.save_results = True
             args.save_models = True
-            args.no_augment = True
+            # args.no_augment = True
             args.grad_clip = 0.5
             args.save = "deblur"
 
@@ -41,6 +41,6 @@ def set_train_template(args):
                 args.data_test = 'BLUR_IMAGE'
                 args.dir_data_test = data_dir + '/TestData'
                 args.test_only = True
-                args.pre_train = "../dwdn-data/models/model_600um_with_Gaussian/model/model_latest.pt"
+                args.pre_train = data_dir + "model/model_1/model_latest.pt"
                 args.resume = True
                 args.save = "deblur_test"
